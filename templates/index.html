@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ET TechGig DevNext '26 — AI Event Concierge | Google ADK + RAG</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <!-- Floating White Pill Navbar inspired by techgig.com/devnext -->
+  <header class="pill-nav-wrapper">
+    <nav class="pill-nav" aria-label="Primary Navigation">
+      <a href="#top" class="pill-nav__brand">DevNext 2026</a>
+      <span class="pill-nav__divider"></span>
+      <a href="#concierge" class="pill-nav__link active">AI Concierge</a>
+      <a href="#stats" class="pill-nav__link">Snapshot</a>
+      <a href="#knowledge-panel" class="pill-nav__link">RAG Index</a>
+      <button type="button" id="openKeyModalBtn" class="pill-nav__key-btn" title="Configure Gemini API Key">
+        <span class="status-dot" id="navKeyDot"></span>
+        <span id="navKeyLabel">API Key</span>
+      </button>
+      <a href="https://techgig.com/devnext" target="_blank" rel="noopener noreferrer" class="pill-nav__cta">
+        Official Page ↗
+      </a>
+    </nav>
+  </header>
+
+  <!-- Warm Espresso-Bronze Architectural Hero matching techgig.com/devnext -->
+  <section class="hero" id="top">
+    <div class="hero__monolith hero__monolith--one"></div>
+    <div class="hero__monolith hero__monolith--two"></div>
+    <div class="hero__monolith hero__monolith--three"></div>
+    <div class="hero__glow"></div>
+
+    <div class="container hero__inner">
+      <div class="hero__eyebrow">
+        <span class="eyebrow-tag">// GOOGLE ADK + EVENT-SCOPED RAG ASSISTANT</span>
+      </div>
+
+      <div class="hero__logo-wrap">
+        <img src="/assets/logo.png" alt="ET TechGig DevNext '26" class="hero__logo" />
+      </div>
+
+      <p class="hero__tagline">
+        INDIA’S DEFINITIVE CONFERENCE FOR TECH BUILDERS IN THE AI ERA
+      </p>
+
+      <div class="hero__meta">
+        <span class="meta-chip">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="4" width="18" height="18" rx="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          NOVEMBER 21, 2026 • 9:00 AM – 7:00 PM IST
+        </span>
+        <span class="meta-chip">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+            <circle cx="12" cy="10" r="3"></circle>
+          </svg>
+          HYDERABAD
+        </span>
+        <span class="meta-chip meta-chip--gold" id="heroModelBadge">
+          ⚡ ADK Runner • gemini-3.8-flash
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Chamfered Metric Strip matching // ABOUT DEVNEXT HYDERABAD -->
+  <section class="stats-strip" id="stats">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-card__num">25+</div>
+          <div class="stat-card__label">SENIOR SPEAKERS</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__num">6</div>
+          <div class="stat-card__label">CONTENT TRACKS</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__num">1000+</div>
+          <div class="stat-card__label">CURATED ATTENDEES</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__num">10+</div>
+          <div class="stat-card__label">NETWORKING HOURS</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main ADK + RAG Concierge Section -->
+  <main class="workspace" id="concierge">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">// DEVNEXT HYDERABAD KNOWLEDGE CONCIERGE</p>
+        <h1 class="section-title">
+          AN AGENT THAT SPEAKS
+          <span class="section-title--gold">DEVNEXT ’26 ONLY.</span>
+        </h1>
+      </div>
+
+      <!-- Alert banner shown only when GOOGLE_API_KEY is missing -->
+      <div class="key-alert hidden" id="keyAlertBanner">
+        <div class="key-alert__text">
+          <strong>Gemini API Key Required:</strong>
+          Set <code>GOOGLE_API_KEY</code> in your <code>.env</code> file or click
+          <strong>Configure Key</strong> to enable live Google ADK + Gemini Embedding responses.
+        </div>
+        <button type="button" class="gold-btn gold-btn--sm" id="bannerKeyBtn">CONFIGURE KEY ↗</button>
+      </div>
+
+      <div class="workspace-grid">
+        <!-- Left: Custom Chat Panel -->
+        <section class="chat-panel" aria-label="DevNext AI Chat">
+          <div class="chat-panel__topbar">
+            <div class="chat-panel__identity">
+              <span class="agent-avatar">DN</span>
+              <div>
+                <div class="chat-panel__title">DevNext ’26 Event Concierge</div>
+                <div class="chat-panel__subtitle" id="ragModeSubtitle">
+                  Google ADK • Strict Event Guardrail • Hybrid RAG
+                </div>
+              </div>
+            </div>
+            <button type="button" id="resetSessionBtn" class="ghost-btn" title="Start a fresh ADK session">
+              ↺ New Session
+            </button>
+          </div>
+
+          <!-- Quick Starter Prompts -->
+          <div class="prompt-strip" aria-label="Suggested Questions">
+            <button type="button" class="prompt-chip" data-prompt="Who are all the speakers at DevNext 2026 and which companies are they from?">
+              🎤 Speaker Lineup (16)
+            </button>
+            <button type="button" class="prompt-chip" data-prompt="Who is DevNext 2026 built for and what experience level is expected?">
+              👥 Who Should Attend?
+            </button>
+            <button type="button" class="prompt-chip" data-prompt="What is The CTO Lounge at DevNext and what are its 5 pillars?">
+              🏛️ The CTO Lounge
+            </button>
+            <button type="button" class="prompt-chip" data-prompt="When and where is DevNext taking place, and are tickets refundable?">
+              🎟️ Date, Venue & Refunds
+            </button>
+            <button type="button" class="prompt-chip" data-prompt="How do I contact the team for speakership, sponsorships, or immediate escalation?">
+              ✉️ Contacts & Sponsorship
+            </button>
+            <button type="button" class="prompt-chip prompt-chip--guardrail" data-prompt="Write a Python function to invert a binary tree.">
+              🛡️ Test Event-Only Guardrail
+            </button>
+          </div>
+
+          <!-- Message Stream -->
+          <div class="chat-messages" id="chatMessages">
+            <article class="msg msg--assistant">
+              <div class="msg__role">// DEVNEXT ’26 CONCIERGE</div>
+              <div class="msg__bubble">
+                <p>
+                  Welcome to <strong>ET TechGig DevNext ’26</strong> (November 21, 2026 • Hyderabad).
+                  I am powered by <strong>Google ADK</strong> and grounded via <strong>RAG</strong> on the official
+                  <code>techgig.com/devnext</code> event knowledge base.
+                </p>
+                <p>
+                  Ask me anything about <strong>speakers, technical themes, The CTO Lounge, attendee eligibility, ticket refunds, timings, or organizer contacts</strong>.
+                  <em>(Questions outside DevNext ’26 are strictly declined.)</em>
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <!-- Input Composer -->
+          <form class="chat-composer" id="chatForm">
+            <input
+              type="text"
+              id="chatInput"
+              class="chat-composer__input"
+              placeholder="Ask a question about ET TechGig DevNext ’26..."
+              autocomplete="off"
+              required
+            />
+            <button type="submit" id="sendBtn" class="gold-btn">
+              <span>ASK AGENT</span>
+              <span aria-hidden="true">↗</span>
+            </button>
+          </form>
+        </section>
+
+        <!-- Right: CTO-Lounge-Style Editorial Sidebar & RAG Knowledge Inspector -->
+        <aside class="side-panel" id="knowledge-panel">
+          <div class="side-card">
+            <div class="side-card__eyebrow">// ARCHITECTURE & GUARDRAILS</div>
+            <h2 class="side-card__heading">HOW THIS ADK AGENT WORKS</h2>
+            <ol class="pillar-list">
+              <li>
+                <span class="pillar-num">01</span>
+                <div>
+                  <strong>Google ADK Runner</strong>
+                  <p>Stateful multi-turn sessions via <code>InMemorySessionService</code> without default <code>adk web</code> chrome.</p>
+                </div>
+              </li>
+              <li>
+                <span class="pillar-num">02</span>
+                <div>
+                  <strong>Hybrid Gemini RAG</strong>
+                  <p>Combines <code>gemini-embedding-001</code> vector search + BM25 lexical ranking over event chunks.</p>
+                </div>
+              </li>
+              <li>
+                <span class="pillar-num">03</span>
+                <div>
+                  <strong>Event-Only Scope Lock</strong>
+                  <p>Answers strictly from verified DevNext ’26 facts and declines off-topic queries.</p>
+                </div>
+              </li>
+            </ol>
+          </div>
+
+          <div class="side-card">
+            <div class="side-card__eyebrow">// INDEXED RAG CORPUS</div>
+            <h2 class="side-card__heading">KNOWLEDGE BASE SECTIONS</h2>
+            <p class="side-card__hint">Click any indexed section to query it:</p>
+            <div class="kb-list" id="kbSectionList">
+              <div class="kb-loading">Loading indexed sections...</div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom CTA Strip inspired by "THE ROOM FILLS ONCE" -->
+  <footer class="footer-cta">
+    <div class="container footer-cta__inner">
+      <div>
+        <div class="section-eyebrow">// ET TECHGIG DEVNEXT ’26 • HYDERABAD</div>
+        <div class="footer-cta__headline">THE ROOM FILLS ONCE. DON’T WATCH FROM THE OUTSIDE.</div>
+      </div>
+      <a href="https://techgig.com/devnext" target="_blank" rel="noopener noreferrer" class="gold-btn">
+        VISIT TECHGIG.COM/DEVNEXT ↗
+      </a>
+    </div>
+  </footer>
+
+  <!-- API Key Configuration Modal -->
+  <div class="modal-backdrop hidden" id="keyModal">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="keyModalTitle">
+      <div class="side-card__eyebrow">// RUNTIME CONFIGURATION</div>
+      <h3 id="keyModalTitle" class="modal-card__title">Configure Gemini API Key</h3>
+      <p class="modal-card__desc">
+        Enter your <code>GOOGLE_API_KEY</code> from Google AI Studio. It will be saved locally to
+        <code>.env</code> in your workspace and activate <code>gemini-3.8-flash</code> +
+        <code>gemini-embedding-001</code> immediately.
+      </p>
+      <form id="keyForm">
+        <input
+          type="password"
+          id="apiKeyInput"
+          class="modal-card__input"
+          placeholder="AIzaSy..."
+          autocomplete="off"
+          required
+        />
+        <div class="modal-card__actions">
+          <button type="button" class="ghost-btn" id="closeKeyModalBtn">Cancel</button>
+          <button type="submit" class="gold-btn">SAVE & ACTIVATE ↗</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
+
