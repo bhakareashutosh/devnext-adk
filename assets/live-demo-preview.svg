@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 350" width="100%" height="100%" role="img" aria-label="Animated DevNext 26 Concierge Chat Preview">
+  <defs>
+    <linearGradient id="topBar" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f3ece2"/>
+      <stop offset="100%" stop-color="#ebe0cf"/>
+    </linearGradient>
+    <linearGradient id="userBub" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#352515"/>
+      <stop offset="100%" stop-color="#1e140b"/>
+    </linearGradient>
+    <linearGradient id="goldBadge" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a2752d"/>
+      <stop offset="50%" stop-color="#dfba72"/>
+      <stop offset="100%" stop-color="#916622"/>
+    </linearGradient>
+    <style>
+      .win { fill: #ffffff; stroke: #ded2c0; stroke-width: 1.6; }
+      .mono { font: 600 11.5px 'Consolas', 'SFMono-Regular', monospace; fill: #7c6d5d; }
+      .title { font: 700 14.5px 'Segoe UI', system-ui, sans-serif; fill: #1e1915; }
+      .u-txt { font: 500 13.5px 'Segoe UI', system-ui, sans-serif; fill: #fcf5ea; }
+      .a-txt { font: 500 13.5px 'Segoe UI', system-ui, sans-serif; fill: #1e1915; }
+      .a-bold { font: 700 13.5px 'Segoe UI', system-ui, sans-serif; fill: #1e1915; }
+      .cite { font: 600 11.5px 'Consolas', 'SFMono-Regular', monospace; fill: #7c5821; }
+      .step-1 { animation: reveal1 9s ease-in-out infinite; }
+      .step-2 { animation: reveal2 9s ease-in-out infinite; }
+      .step-3 { animation: reveal3 9s ease-in-out infinite; }
+      @keyframes reveal1 {
+        0%, 5% { opacity: 0; transform: translateY(6px); }
+        12%, 92% { opacity: 1; transform: translateY(0); }
+        98%, 100% { opacity: 0; }
+      }
+      @keyframes reveal2 {
+        0%, 24% { opacity: 0; transform: translateY(6px); }
+        32%, 92% { opacity: 1; transform: translateY(0); }
+        98%, 100% { opacity: 0; }
+      }
+      @keyframes reveal3 {
+        0%, 55% { opacity: 0; transform: translateY(6px); }
+        65%, 92% { opacity: 1; transform: translateY(0); }
+        98%, 100% { opacity: 0; }
+      }
+    </style>
+  </defs>
+
+  <!-- Window Shell -->
+  <rect x="1" y="1" width="1158" height="348" rx="16" class="win"/>
+  <path d="M 1 17 Q 1 1 17 1 L 1143 1 Q 1159 1 1159 17 L 1159 54 L 1 54 Z" fill="url(#topBar)"/>
+  <line x1="1" y1="54" x2="1159" y2="54" stroke="#ded2c0" stroke-width="1.2"/>
+
+  <!-- Window Controls & Header -->
+  <circle cx="26" cy="28" r="6" fill="#e57373"/>
+  <circle cx="46" cy="28" r="6" fill="#f6bf26"/>
+  <circle cx="66" cy="28" r="6" fill="#4caf50"/>
+  <rect x="92" y="14" width="28" height="28" rx="6" fill="url(#goldBadge)"/>
+  <text x="98" y="33" font-family="Segoe UI, sans-serif" font-size="11.5" font-weight="700" fill="#1c1208">DN</text>
+  <text x="130" y="27" class="title">DevNext '26 Event Concierge</text>
+  <text x="130" y="43" class="mono">Google ADK • gemini-3.8-flash • Hybrid Vector + BM25 RAG</text>
+
+  <!-- Step 1: User Question -->
+  <g class="step-1">
+    <text x="1126" y="78" text-anchor="end" class="mono">// ATTENDEE QUERY</text>
+    <rect x="560" y="86" width="566" height="44" rx="11" fill="url(#userBub)"/>
+    <text x="580" y="113" class="u-txt">When is DevNext '26 happening, and is Ashutosh Bhakare speaking?</text>
+  </g>
+
+  <!-- Step 2: Assistant RAG-Grounded Response -->
+  <g class="step-2">
+    <text x="34" y="152" class="mono">// DEVNEXT '26 CONCIERGE (ADK + RAG)</text>
+    <rect x="34" y="160" width="760" height="104" rx="11" fill="#faf6f0" stroke="#dfd3c2"/>
+    <text x="54" y="186" class="a-txt">• <tspan class="a-bold">Date &amp; Time:</tspan> Saturday, November 21, 2026 (9:00 AM – 7:00 PM IST) in <tspan class="a-bold">Hyderabad</tspan>.</text>
+    <text x="54" y="211" class="a-txt">• <tspan class="a-bold">Speaker Confirmed:</tspan> Yes — <tspan class="a-bold">Ashutosh S. Bhakare</tspan> (Founder &amp; CEO, <tspan class="a-bold">BYOLabs.in</tspan>) is featured</text>
+    <text x="66" y="233" class="a-txt">in the official 16-leader speaker lineup ("A Lineup That Speaks Production Code").</text>
+
+    <!-- Citation Pill -->
+    <rect x="54" y="242" width="565" height="16" rx="4" fill="#f3e6cf"/>
+    <text x="62" y="254" class="cite">✓ Grounded in 5 chunks • hybrid (gemini-embedding-001 + BM25) • Top score: 0.94</text>
+  </g>
+
+  <!-- Step 3: Guardrail Demonstration Strip -->
+  <g class="step-3">
+    <rect x="34" y="284" width="1092" height="44" rx="10" fill="#fffaf0" stroke="#dfb97a" stroke-dasharray="5 4"/>
+    <text x="54" y="311" class="cite">🛡️ EVENT-ONLY GUARDRAIL VERIFIED: Off-topic prompt ("Write a Python sort script") → Politely declined; scoped strictly to DevNext '26.</text>
+  </g>
+</svg>
